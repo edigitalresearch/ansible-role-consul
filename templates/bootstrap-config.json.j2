@@ -1,7 +1,7 @@
 {
   "server": true,
   "client_addr": "{{ consul.global.client_addr }}",
-  "bind_addr": "{{ hostvars[inventory_hostname]['ansible_all_ipv4_addresses'][0] }}",
+  "bind_addr": "0.0.0.0",
   "datacenter": "{{ consul.global.datacenter }}",
   "data_dir": "{{ consul.global.data_dir }}",
   "bootstrap_expect": {{ consul.bootstrap.expect }},
