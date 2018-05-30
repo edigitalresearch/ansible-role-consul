@@ -48,6 +48,16 @@ consul:
     encryption: <MY_ENCRYPTION_KEY>
   bootstrap:
     expect: 3
+  servers:
+    - 1.1.1.1
+    - 2.2.2.2
+    - 3.3.3.3
+  agents:
+    - 1.1.1.1
+    - 2.2.2.2
+    - 3.3.3.3
+    - 4.4.4.4
+    - 5.5.5.5
 ```
 
 This will create a 5 node cluster - the web UI will be available on any client node address.

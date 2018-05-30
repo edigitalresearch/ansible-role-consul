@@ -2,15 +2,15 @@
   "server": false,
   "ui": true,
   "client_addr": "{{ consul.global.client_addr }}",
-  "bind_addr": "{{ hostvars[inventory_hostname]['ansible_all_ipv4_addresses'][0] }}",
+  "bind_addr": "0.0.0.0",
   "datacenter": "{{ consul.global.datacenter }}",
   "data_dir": "{{ consul.global.data_dir }}",
   "log_level": "{{ consul.global.log_level }}",
   "encrypt": "{{ consul.global.encryption }}",
   "enable_syslog": true,
   "start_join": [
-    {% for host in groups['consul'] %}
-    "{{ hostvars[host]['ansible_all_ipv4_addresses'][0] }}"{% if not loop.last %},{% endif %}
+    {% for address in consul.agents %}
+    "{{ address }}"{% if not loop.last %},{% endif %}
     {% endfor %}
   ]
 }
