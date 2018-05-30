@@ -1,5 +1,6 @@
 consul:
   global:
+    bind_adapter: ansible_eth0
     client_addr: 0.0.0.0
     datacenter: example
     log_level: INFO
