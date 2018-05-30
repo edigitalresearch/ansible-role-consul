@@ -2,7 +2,7 @@
   "bootstrap": false,
   "server": true,
   "client_addr": "{{ consul.global.client_addr }}",
-  "bind_addr": "{{ hostvars[inventory_host][consul.global.bind_adapter]['ipv4']['address'] }}",
+  "bind_addr": "{{ hostvars[inventory_hostname][consul.global.bind_adapter]['ipv4']['address'] }}",
   "datacenter": "{{ consul.global.datacenter }}",
   "data_dir": "{{ consul.global.data_dir }}",
   "log_level": "{{ consul.global.log_level }}",
