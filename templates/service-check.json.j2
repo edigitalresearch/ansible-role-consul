@@ -1,0 +1,7 @@
+{
+  "check": {
+    "name": "{{ item.name }}",
+    "args": [{% for arg in item.args %}"{{ arg }}"{% if not loop.last %},{% endif %}{% endfor %}],
+    "interval": "{{ item.interval }}"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "service":
+    {
+      "name": "{{ item.key }}",
+      "tags": [{% for tag in item.value.tags %}"{{ tag }}"{% if not loop.last %},{% endif %}{% endfor %}],
+      "port": {{ item.value.port }}
+    }
+}

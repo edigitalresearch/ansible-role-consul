@@ -8,6 +8,7 @@
   "log_level": "{{ consul.global.log_level }}",
   "encrypt": "{{ consul.global.encryption }}",
   "enable_syslog": true,
+  "enable_script_checks": true,
   "start_join": [
     {% for address in consul.agents %}
     "{{ address }}"{% if not loop.last %},{% endif %}

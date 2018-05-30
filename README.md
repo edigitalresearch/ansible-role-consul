@@ -61,6 +61,33 @@ The data and communication across the gossip protocol is encrypted. All nodes mu
 
 Add the resulting key to your variables prior to running the role.
 
+## Adding services
+
+Service files can be written by adding a dictionary of services to the variables file. For example to add an Apache service:
+
+```
+consul:
+  services:
+    apache:
+      tags:
+        - web-tier
+        - apache
+      port: 80  
+```
+
+## Adding Healthchecks
+
+Adding healthchecks can be done in much the same way - for example here is a script health check for the above service
+
+```
+checks:
+    - name: apache
+      args:
+        - curl
+        - localhost
+      interval: 10s
+```
+
 ## Example Task with role
 
 ```

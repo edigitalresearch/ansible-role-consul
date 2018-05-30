@@ -1,11 +1,10 @@
 - name: Consul | Create client configuration
   template:
     src: client-config.json.j2
-    dest: "/etc/consul.d/client/config.json"
+    dest: /etc/consul.d/client/config.json
     owner: consul
     group: consul
     mode: 0644
-  when: "'consul-client' in group_names | default([])"
 
 - name: Consul | Create Systemd Client Service
   template:
@@ -14,6 +13,27 @@
     owner: root
     group: root
     mode: 0755
+  notify: reload-systemd
+
+- name: Consul | Register client services
+  template:
+    src: service.json.j2
+    dest: "/etc/consul.d/client/{{ item.key }}.json"
+    owner: consul
+    group: consul
+    mode: 0644
+  with_dict: "{{ consul.services | default({}) }}"
+  notify: reload-consul-client
+
+- name: Consul | Register client healthchecks
+  template:
+    src: service-check.json.j2
+    dest: "/etc/consul.d/client/{{ item.name }}-check.json"
+    owner: consul
+    group: consul
+    mode: 0644
+  with_items: "{{ consul.checks | default([]) }}"
+  notify: reload-consul-client
 
 - name: Consul | Start Client Service
   systemd:
