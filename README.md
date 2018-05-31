@@ -75,6 +75,19 @@ consul:
       port: 80  
 ```
 
+## Adding Healthchecks
+
+Adding healthchecks can be done in much the same way - for example here is a script health check for the above service
+
+```
+checks:
+    - name: apache
+      args:
+        - curl
+        - localhost
+      interval: 10s
+```
+
 ## Example Task with role
 
 ```
