@@ -4,12 +4,11 @@ An Ansible Role for setting up Consul (https://consul.io)
 
 ## Organising hosts
 
-This module requires 4 hosts groups: `consul`, `consul-bootstrap`, `consul-server` and `consul-client`:
+This module requires 3 hosts groups: `consul`, `consul-server` and `consul-client`:
 
 * All Consul servers should belong under the `consul` group.
-* A single cluster bootstrap server should belong under `consul-bootstrap` group
-* The remaining servers should belong under `consul-server` group
-* Any remaining client servers should belong under `consul-client` group
+* The servers should belong under `consul-server` group - Autojoin with Raft will bootstrap the cluster
+* Any clients should belong under `consul-client` group
 
 This role assumes a cluster of 5 nodes by default
 
@@ -21,10 +20,8 @@ consul-bootstrap
 consul-server
 consul-client
 
-[consul-bootstrap]
-consul1.example.com
-
 [consul-server]
+consul1.example.com
 consul2.example.com
 consul3.example.com
 
@@ -41,17 +38,22 @@ Here is an example variables file
 ---
 consul:
   global:
+    bootstrap_expect: 3
     bind_adapter: ansible_eth0
     client_addr: 0.0.0.0
     datacenter: vagrant
     log_level: INFO
     data_dir: /var/lib/consul.d/
     encryption: <MY_ENCRYPTION_KEY>
-  bootstrap:
-    expect: 3
+  agents:
+    - 172.16.10.22
+    - 172.16.10.23
+    - 172.16.10.24
+    - 172.16.10.25
+    - 172.16.10.26
 ```
 
-This will create a 5 node cluster - the web UI will be available on any client node address.
+This will create a 5 node cluster - the web UI will be available on any server node address.
 
 ## Generating Encryption Keys
 
