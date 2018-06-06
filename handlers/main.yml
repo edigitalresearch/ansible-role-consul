@@ -3,21 +3,6 @@
     systemd:
       daemon_reload: yes
       
-  - name: start-consul-bootstrap
-    service:
-      name: consul-bootstrap
-      state: started
-
-  - name: restart-consul-bootstrap
-    service:
-      name: consul-bootstrap
-      state: restarted
-
-  - name: reload-consul-bootstrap
-    service:
-      name: consul-bootstrap
-      state: reloaded
-
   - name: start-consul-server
     service:
       name: consul-server

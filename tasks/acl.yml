@@ -1,0 +1,56 @@
+# - name: Consul | Start Client Service
+#   systemd:
+#     name: consul-server
+#     state: restarted
+#   when: "'consul-server' in group_names | default([])"
+#
+# - name: Consul | Start Client Service
+#   systemd:
+#     name: consul-client
+#     state: restarted
+#   when: "'consul-client' in group_names | default([])"
+
+- name: Consul | Generate ACL Client Token
+  uri:
+    url: http://127.0.0.1:8500/v1/acl/create
+    method: PUT
+    body_format: json
+    headers:
+      X-Consul-Token: "{{ consul.acl.acl_master_token }}"
+    body:
+      Name: "Agent Token"
+      Type: "client"
+      Rules: "node \"\" { policy = \"write\" } service \"\" { policy = \"read\" }"
+  register: agent_token
+
+- name: Consul | Apply ACL Client Token
+  uri:
+    url: http://127.0.0.1:8500/v1/agent/token/acl_agent_token
+    method: PUT
+    body_format: json
+    headers:
+      X-Consul-Token: "{{ consul.acl.acl_master_token }}"
+    body:
+      Token: "{{ agent_token.json.ID }}"
+
+- name: Consul | Apply Default Policies
+  uri:
+    url: http://127.0.0.1:8500/v1/acl/update
+    method: PUT
+    body_format: json
+    headers:
+      X-Consul-Token: "{{ consul.acl.acl_master_token }}"
+    body: "{{ lookup('file','{{ item }}') }}"
+  with_items:
+    - cli.json
+    - dns.json
+
+- name: Consul | Apply Custom Policies
+  uri:
+    url: http://127.0.0.1:8500/v1/acl/update
+    method: PUT
+    body_format: json
+    headers:
+      X-Consul-Token: "{{ consul.acl.acl_master_token }}"
+    body: "{{ item }}"
+  with_items: "{{ consul.acl.policies | default([]) }}"
