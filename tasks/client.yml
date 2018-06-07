@@ -23,7 +23,6 @@
     group: consul
     mode: 0644
   with_dict: "{{ consul.services | default({}) }}"
-  notify: reload-consul-client
 
 - name: Consul | Register client healthchecks
   template:
@@ -33,10 +32,9 @@
     group: consul
     mode: 0644
   with_items: "{{ consul.checks | default([]) }}"
-  notify: reload-consul-client
 
 - name: Consul | Start Client Service
   systemd:
     name: consul-client
-    state: started
+    state: restarted
     enabled: yes

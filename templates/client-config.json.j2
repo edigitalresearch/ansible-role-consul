@@ -1,15 +1,18 @@
 {
   "server": false,
-  "ui": true,
   "client_addr": "{{ consul.global.client_addr }}",
   "bind_addr": "{{ hostvars[inventory_hostname][consul.global.bind_adapter]['ipv4']['address'] }}",
   "datacenter": "{{ consul.global.datacenter }}",
   "data_dir": "{{ consul.global.data_dir }}",
   "log_level": "{{ consul.global.log_level }}",
   "encrypt": "{{ consul.global.encryption }}",
+  {% if consul.acl.acl_master_token is defined %}
+  "acl_datacenter": "{{ consul.acl.acl_datacenter }}",
+  "acl_down_policy": "{{ consul.acl.acl_down_policy }}",
+  "acl_default_policy": "{{ consul.acl.acl_default_policy }}",
+  {% endif %}
   "enable_syslog": true,
-  "enable_script_checks": true,
-  "start_join": [
+  "retry_join": [
     {% for address in consul.agents %}
     "{{ address }}"{% if not loop.last %},{% endif %}
     {% endfor %}

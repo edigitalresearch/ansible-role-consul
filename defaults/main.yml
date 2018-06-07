@@ -7,3 +7,8 @@ consul:
     data_dir: /var/lib/consul.d/
   bootstrap:
     expect: 3
+  acl:
+    acl_datacenter: dc1
+    acl_default_policy: deny
+    acl_down_policy: extend-cache
+    
