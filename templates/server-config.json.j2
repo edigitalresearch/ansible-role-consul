@@ -1,5 +1,6 @@
 {
-  "bootstrap": false,
+  "bootstrap_expect": {{ consul.global.bootstrap_expect }},
+  "ui": true,
   "server": true,
   "client_addr": "{{ consul.global.client_addr }}",
   "bind_addr": "{{ hostvars[inventory_hostname][consul.global.bind_adapter]['ipv4']['address'] }}",
@@ -8,9 +9,8 @@
   "log_level": "{{ consul.global.log_level }}",
   "encrypt": "{{ consul.global.encryption }}",
   "enable_syslog": true,
-  "enable_script_checks": true,
-  "start_join": [
-    {% for address in consul.servers %}
+  "retry_join": [
+    {% for address in consul.agents %}
     "{{ address }}"{% if not loop.last %},{% endif %}
     {% endfor %}
   ]

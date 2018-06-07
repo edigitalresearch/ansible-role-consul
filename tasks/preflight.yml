@@ -28,7 +28,6 @@
     state: directory
   with_items:
     - /etc/consul.d
-    - /etc/consul.d/bootstrap
     - /etc/consul.d/server
     - /etc/consul.d/client
     - /var/lib/consul.d

@@ -2,10 +2,6 @@
   include_tasks: preflight.yml
   when: "'consul' in group_names | default([])"
 
-- name: Consul | Bootstrap Tasks
-  include_tasks: bootstrap.yml
-  when: "'consul-bootstrap' in group_names | default([])"
-
 - name: Consul | Server Tasks
   include_tasks: server.yml
   when: "'consul-server' in group_names | default([])"
