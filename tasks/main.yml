@@ -9,9 +9,3 @@
 - name: Consul | Client Tasks
   include_tasks: client.yml
   when: "'consul-client' in group_names | default([])"
-
-- name: Consul | ACL Tasks
-  include_tasks: acl.yml
-  when:
-    - "'consul' in group_names | default([])"
-    - consul.acl.acl_master_token is defined

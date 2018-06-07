@@ -1,5 +1,0 @@
-{
-  "ID": "anonymous",
-  "Type": "client",
-  "Rules": "node \"\" { policy = \"read\" } service \"consul\" { policy = \"read\" }"
-}

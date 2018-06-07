@@ -9,12 +9,6 @@
   "log_level": "{{ consul.global.log_level }}",
   "encrypt": "{{ consul.global.encryption }}",
   "enable_syslog": true,
-  {% if consul.acl.acl_master_token is defined %}
-  "acl_datacenter": "{{ consul.acl.acl_datacenter }}",
-  "acl_down_policy": "{{ consul.acl.acl_down_policy }}",
-  "acl_default_policy": "{{ consul.acl.acl_default_policy }}",
-  "acl_master_token": "{{ consul.acl.acl_master_token }}",
-  {% endif %}
   "retry_join": [
     {% for address in consul.agents %}
     "{{ address }}"{% if not loop.last %},{% endif %}

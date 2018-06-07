@@ -14,9 +14,10 @@
     owner: consul
     group: consul
     mode: 0644
+  notify: reload-consul-server
 
 - name: Consul | Start Server Service
   systemd:
     name: consul-server
-    state: restarted
+    state: started
     enabled: yes

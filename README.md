@@ -63,21 +63,6 @@ The data and communication across the gossip protocol is encrypted. All nodes mu
 
 Add the resulting key to your variables prior to running the role.
 
-## Enable Cluster ACL
-
-ACL for the cluster can be enabled by setting an ACL Master Token. If this isn't set ACL configuration is skipped. ACL is **not enabled by default**
-
-```
-consul:
-  acl:
-    acl_datacenter: dc1
-    acl_default_policy: deny
-    acl_down_policy: extend-cache
-    acl_master_token: <MY_TOKEN>
-```
-
-When ACL is enabled a few default policies are applied to allow client syncing, DNS and anonymous consul member listing. Additional policies can be passed as json items under `acl.policies`. See [https://www.consul.io/docs/guides/acl.html](https://www.consul.io/docs/guides/acl.html) for ACL HTTP polcies
-
 ## Adding services
 
 Service files can be written by adding a dictionary of services to the variables file. For example to add an Apache service:
