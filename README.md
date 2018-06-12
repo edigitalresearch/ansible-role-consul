@@ -16,7 +16,6 @@ This role assumes a cluster of 5 nodes by default
 
 ```
 [consul:children]
-consul-bootstrap
 consul-server
 consul-client
 
